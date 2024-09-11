@@ -23,7 +23,7 @@ public class FileHelperTest {
      * Test of readFile method, of class FileHelper.
      */
     @Test
-    public void testReadFileSuccess() {
+    public void testReadFileNormalCase() {
         String fileName = "test/resources/testFile.txt";
         Map<String, Integer> expResult = Map.of(
             "Atlas", 3,
@@ -39,7 +39,7 @@ public class FileHelperTest {
         // Actual result from the method
         Map<String, Integer> result = FileHelper.readFile(fileName);
         // Compare sorted lists
-        assertEquals(expResult, result);
+        assertEquals("The Map should be equals as the expResult",expResult, result);
     }
     
     @Test
@@ -112,6 +112,14 @@ public class FileHelperTest {
         // This test expects an exception because there's no space in the input
         String input = "TeamWithoutScore";
         FileHelper.extractTeamAndScore(input);
+    }
+    
+    @Test
+    public void sortByValue() {
+        String input = "   Team With Spaces 12";
+        String[] expected = {"   Team With Spaces", "12"};
+        String[] actual = FileHelper.extractTeamAndScore(input);
+        assertArrayEquals("The team name and score should be extracted correctly with multiple spaces.", expected, actual);
     }
     
 }
